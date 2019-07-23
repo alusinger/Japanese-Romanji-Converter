@@ -2,52 +2,50 @@ package com.convert_Number_To_Romanji;
 
 import java.util.HashMap;
 
-
-
-
-
 public class romanjiConverter {
+	
 	private HashMap< Integer, String > romanjiHashMap ; // initializes romanjiHashMap 
 	int inputNumber = 0; // initializes inputNumber variable and set's it's number to zero.
 	
 		
 	public romanjiConverter(){ // Constructor for romanjiConverter
+	
 		createRomanjiMap(); // initializes the createRomanjiMap method below to create the romanji HashMap
 		
-	}
+	} // End of romanjiConverter constructor method
 
 	/* This section is a work in progress.
-   *    This will likely require changes to the numberConvert method. 
-   *    My rough plan is to change numberConvert to handle the conversion of numbers 
-   *      between 1-9999 returning the string for those numbers to this method. 
-   *      Further, this method will handle the breakdown of the myriads (groups of 10,000)
-   *      and group the strings from numberConvert.
-   * 
-   *
-   * This method would be implemented to handle numbers larger than 10,000.
-	 * Numbers larger than 10,000 require converting the numbers into myriads (groups of 10,000)
-	 * 
-	 * 
-	 * public void largeNumberConvert(int inputNumber, int numberLength){
-	 * 	
-	 * 		if ( numberLength < 5 ){ // if the number length is less than 5, just do numberConvert
-	 * 			numberConvert(inputNumber);
-	 * 
-	 * 			while ( numberLength >= 5 ){ // while the numberLength is greater than or equal to 5 do the following.
-	 * 			
-	 * 				inputNumber
-	 * 			
-	 * 
-	 * 			}
-	 * 
-	 * 		}
-	 * 
-	 * }
-	 */
+	*    This will likely require changes to the numberConvert method. 
+   	*    My rough plan is to change numberConvert to handle the conversion of numbers 
+   	*      between 1-9999 returning the string for those numbers to this method. 
+   	*      Further, this method will handle the breakdown of the myriads (groups of 10,000)
+   	*      and group the strings from numberConvert.
+   	* 
+   	*
+   	* This method would be implemented to handle numbers larger than 10,000.
+	* Numbers larger than 10,000 require converting the numbers into myriads (groups of 10,000)
+	* 
+	* Rough design of method - work in progress.
+	* public void largeNumberConvert(int inputNumber, int numberLength){
+	* 	
+	* 	if ( numberLength < 5 ){ // if the number length is less than 5, just do numberConvert
+	* 			numberConvert(inputNumber);
+	* 
+	* 		while ( numberLength >= 5 ){ // while the numberLength is greater than or equal to 5 do the following.
+	* 			
+	* 			inputNumber
+	* 			
+	* 
+	* 		}
+	* 
+	* 	}
+	* 
+	* }
+	*/
 	
 	
 	/*
-	 * Gets input number from the main class
+	 * Gets input number from the Main.jave class
 	 * 
 	 * Checks to see if the number is divisible by 1000
 	 * 		Checks if the number is 1000, 3000, 8000 
@@ -65,42 +63,55 @@ public class romanjiConverter {
 	 * 		Divides the number by 10 and adds that value from romanjiHashMap 
 	 * 		Does mod 10 for inputNumber
 	 * 
-	 * adds value from romanjiHashMap for single digit value
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
+	 * Adds value from romanjiHashMap for single digit value
 	 */
 	public void numberConvert(int inputNumber){
-		StringBuilder sb = new StringBuilder();
+		
+		StringBuilder sb = new StringBuilder(); // creates an new instance of Stringbuilder to build the romanji string.
 		
 		while (inputNumber >= 1 ){ // While the inputNumber is greater than 0 do the following loop
 			
 			
 			if ( (inputNumber / 1000 ) >= 1 ){ // If inputNumber / 1000 is greater than 0 do the following
 				
-				/* Checks to see if the input number is 1000, 3000, or 8000
+				/* 
+				 * Checks to see if the input number is 1000, 3000, or 8000
 				 * ((inputNumber / 1000) * 1000 == 1000) e.g. (1443 / 1000) = 1 * 1000 = 1000
-				 * appends the value if it is in the hashmap 
+				 * Appends the value if it is in the hashmap 
+				 * Changes the value of inputNumber to the remainder of the 4 digit number
+				 * inputNumber = inputNumber % 1000 e.g. (1443 % 1000) = 443
 				 */
 				if ((inputNumber / 1000)*1000 == 1000 || (inputNumber / 1000)*1000 == 3000 || (inputNumber / 1000)*1000 == 8000){
+					
 					sb.append(romanjiHashMap.get((inputNumber / 1000) * 1000 )+" ");
 					inputNumber = inputNumber % 1000;
+					
 				} else {
+					
 					sb.append(romanjiHashMap.get(inputNumber / 1000)+romanjiHashMap.get(1000)+" ");
 					inputNumber = inputNumber % 1000;
+					
 				}
 				
 			}
 			
-			if ( (inputNumber / 100 ) >= 1 ){
-				if ((inputNumber / 100)*100 == 100 || (inputNumber / 100)*100 == 300 || (inputNumber / 100)*100 == 800){
+			if ( (inputNumber / 100 ) >= 1 ){ // If inputNumber / 100 is greater than 0 do the following
+
+				/* 
+				 * Checks to see if the input number is 100, 300, 600, or 800.
+				 * ((inputNumber / 100) * 100 == 100) e.g. (144 / 100) = 1 * 100 = 100
+				 * Appends the value if it is in the HashMap 
+				 * Else just appends the value of (input/100) from the HashMap
+				 * Changes the value of inputNumber to the remainder of the 3 digit number
+				 * inputNumber = inputNumber % 100 e.g. (443 % 100) = 43				 
+				 */
+				if ((inputNumber / 100)*100 == 100 || (inputNumber / 100)*100 == 300 || (inputNumber / 100)*100 == 600 || (inputNumber / 100)*100 == 800){
+
 					sb.append(romanjiHashMap.get((inputNumber / 100) * 100 )+ " ");
 					inputNumber = inputNumber % 100;
+					
 				} else {
+
 					sb.append(romanjiHashMap.get(inputNumber / 100)+romanjiHashMap.get(100)+" ");
 					inputNumber = inputNumber % 100;
 					
@@ -108,27 +119,48 @@ public class romanjiConverter {
 				
 			}
 			
+			/* 
+			 * Appends the value of (input/10) from the HashMap
+			 *
+			 * Changes the value of inputNumber to the remainder of the 3 digit number
+			 * inputNumber = inputNumber % 10 e.g. (43 % 10) = 3				 			 
+			 * If statement is used to ensure that the grouping of words is spaced correctly
+			 */			
 			if ( (inputNumber / 10 ) >= 1 ){
+				
 				if ( ( inputNumber / 10 ) == 1 ){
+				
 					sb.append(romanjiHashMap.get(10)+" ");
 					inputNumber = inputNumber % 10;
+					
 				} else {
-					sb.append(romanjiHashMap.get(inputNumber / 10)+romanjiHashMap.get(10)+" ");
-					inputNumber = inputNumber % 10;
+					
+					sb.append(romanjiHashMap.get(inputNumber / 10)+romanjiHashMap.get(10)+" "); 
+					inputNumber = inputNumber % 10; 
+					
 				}
 			}
 			
+			// If statment to ensure that any orders of magnitude that are 0 aren't given space in the string.
 			if ( inputNumber == 0 ){
+				
 				sb.append("");
+				
 			}
 			
+			// Appends the single digit value to the string.
 			if ( inputNumber >= 1 ){
+				
 				sb.append(romanjiHashMap.get(inputNumber));
 				break;
+				
 			} 
-		}
+			
+		} // End of While loop
+		
 		System.out.println("The Romanji version of your number is: " + sb);
-	}
+		
+	} // End of numberConvert method
 	
 	
 		
@@ -141,8 +173,6 @@ public class romanjiConverter {
 	private void createRomanjiMap(){
 
 		romanjiHashMap = new HashMap< Integer, String>(); 	// Creates a Hashmap
-
-		
 		
 		/* Romanji Hashmap
 		* Sources: https://www.omniglot.com/language/numbers/japanese.htm
@@ -249,10 +279,17 @@ public class romanjiConverter {
 		* 5 2478 9010 0433 4220 	= go-kei nisen-yonhyaku-nanajū-hachi-chō kyuu-oku yonhyaku-sanjū-san-man yonsen-nihyakku-nijū 
 		*							  In three digit grouping : 52,478,901,004,334,220
 		*
-		*/	
-		// 0-10
+		*/
+		
+		
+		
+		/*
+		 *  HashMap for 0-10 and null.
+		 */
+		// adds zero space to null results from the HashMap
 		romanjiHashMap.put(null, "");
-		romanjiHashMap.put( 0, "rei");
+		// handled in the Main, but here for completeness and error catching
+		romanjiHashMap.put( 0, "zero or rei");  
 		romanjiHashMap.put( 1, "ichi");
 		romanjiHashMap.put( 2, "ni");
 		romanjiHashMap.put( 3, "san");
@@ -273,8 +310,8 @@ public class romanjiConverter {
 		romanjiHashMap.put( 1000, "issen");
 		romanjiHashMap.put( 3000, "sanzen");
 		romanjiHashMap.put( 8000, "hassen");
-		// man - ten-thousand - 10^4
-	}	
+		
+	} // End of createRomanjiMap method
 	
 
 /*  This section is a work in progress. It will be used to handle numbers larger than 10,000.
@@ -366,6 +403,6 @@ public class romanjiConverter {
 //			// muryōtaisū						-	10^68
 //			// romanji.put((long) (10^68), "muryōtaisū");
 //		
-//	}
+//	} // End of largeRomanjiMap method
 	
-}
+} // End of romanjiConverter class
