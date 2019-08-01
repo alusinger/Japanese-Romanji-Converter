@@ -2,13 +2,13 @@ package com.convert_Number_To_Romanji;
 
 import java.util.HashMap;
 
-public class romanjiConverter {
+public class RomanjiConverter {
 	
 	private HashMap< Integer, String > romanjiHashMap ; // initializes romanjiHashMap 
 	int inputNumber = 0; // initializes inputNumber variable and set's it's number to zero.
 	
 		
-	public romanjiConverter(){ // Constructor for romanjiConverter
+	public RomanjiConverter(){ // Constructor for romanjiConverter
 	
 		createRomanjiMap(); // initializes the createRomanjiMap method below to create the romanji HashMap
 		
